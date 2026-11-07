@@ -42,3 +42,5 @@ Extracting a directory while keeping its history:
 git subtree split -P go/<name> -b <name>
 git push git@github.com:Yakumo-zi/<name>.git <name>:main
 ```
+
+Details, the reverse direction (`subtree add` / `push` / `pull`), and the gotchas: **[docs/git-subtree.md](docs/git-subtree.md)**.

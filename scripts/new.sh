@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 # Scaffold a new demo directory: manifest, stub, README, and an index row in README.md.
 #
-#   ./new.sh go wordfreq
+#   ./scripts/new.sh go wordfreq
 #
 # Creates go/wordfreq/ with go.mod + main.go + README.md, adds a row to the
 # index table, and drops the .gitkeep of that language directory.
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."  # repo root
 
 usage() {
 	cat >&2 <<'EOF'
-usage: ./new.sh <lang> <name>
+usage: ./scripts/new.sh <lang> <name>
 
   lang  go | rust | c | python | web
   name  lowercase letters, digits and dashes
 
-example: ./new.sh go wordfreq
+example: ./scripts/new.sh go wordfreq
 EOF
 	exit 2
 }

@@ -12,7 +12,7 @@ Small, self-contained demos. One idea per directory — each directory builds an
 
 ```
 .
-├── new.sh                # scaffold a demo: ./new.sh <lang> <name>
+├── scripts/new.sh        # scaffold a demo: ./scripts/new.sh <lang> <name>
 ├── go/<name>/            # go.mod lives here
 ├── rust/<name>/          # Cargo.toml lives here
 ├── c/<name>/             # Makefile lives here
@@ -23,7 +23,7 @@ Small, self-contained demos. One idea per directory — each directory builds an
 ## Add a demo
 
 ```bash
-./new.sh go wordfreq
+./scripts/new.sh go wordfreq
 ```
 
 That creates `go/wordfreq/` with a manifest, a hello-world stub, and a README,
@@ -41,7 +41,7 @@ Rules:
 
 1. **Self-contained.** Every demo directory owns its manifest (`go.mod`, `Cargo.toml`, `Makefile`, `package.json`). No shared code between demos, no root-level module.
 2. **Independent.** Adding, rewriting, or deleting a demo never touches another one.
-3. **Readable.** Each demo has a short `README.md`: what it is, how to run it, what I learned. `new.sh` generates the skeleton.
+3. **Readable.** Each demo has a short `README.md`: what it is, how to run it, what I learned. `scripts/new.sh` generates the skeleton.
 4. **Committed by directory.** One commit per demo, message prefix `<lang>/<name>: ...`.
 
 ## When to split a demo into its own repo

@@ -12,36 +12,48 @@ Small, self-contained demos. One idea per directory — each directory builds an
 
 ```
 .
-├── scripts/new.sh        # scaffold a demo: ./scripts/new.sh <lang> <name>
-├── go/<name>/            # go.mod lives here
-├── rust/<name>/          # Cargo.toml lives here
-├── c/<name>/             # Makefile lives here
-├── python/<name>/        # main.py
-└── web/<name>/           # index.html, servable from GitHub Pages
+├── scripts/
+│   ├── new.go            # scaffold a demo: go run scripts/new.go <lang> <name>
+│   └── templates/        # only for languages without a package manager (c, web)
+├── go/<name>/            # go.mod via `go mod init`
+├── rust/<name>/          # Cargo.toml via `cargo init`
+├── python/<name>/        # pyproject.toml via `uv init`
+├── c/<name>/             # Makefile + main.c from templates
+└── web/<name>/           # index.html from templates
 ```
 
 ## Add a demo
 
 ```bash
-./scripts/new.sh go wordfreq
+go run scripts/new.go go wordfreq
 ```
 
-That creates `go/wordfreq/` with a manifest, a hello-world stub, and a README,
-and inserts a row at the top of the index above. Then:
+That creates `go/wordfreq/` with a working manifest and stub, a README, and a
+row at the top of the index above. Then:
 
 1. replace the stub with the actual demo, and fill in `go/wordfreq/README.md`
    and the index row;
 2. `git add go/wordfreq README.md && git commit -m 'go/wordfreq: <what it does>'`.
 
-Languages: `go`, `rust`, `c`, `python`, `web`. The script refuses to overwrite
-existing directories and drops that language directory's `.gitkeep` on the first
-demo.
+Languages: `go`, `rust`, `python`, `c`, `web`. Manifests are not hand-written —
+the language's own tool does it:
+
+| lang | manifest from | stub |
+|---|---|---|
+| `go` | `go mod init` | `scripts/templates/go/main.go.tmpl` |
+| `rust` | `cargo init --vcs none` | written by cargo |
+| `python` | `uv init --app --no-package` | written by uv |
+| `c` | — | `scripts/templates/c/` |
+| `web` | — | `scripts/templates/web/` |
+
+The script refuses to overwrite an existing directory, validates the name, and
+drops that language directory's `.gitkeep` on the first demo.
 
 Rules:
 
 1. **Self-contained.** Every demo directory owns its manifest (`go.mod`, `Cargo.toml`, `Makefile`, `package.json`). No shared code between demos, no root-level module.
 2. **Independent.** Adding, rewriting, or deleting a demo never touches another one.
-3. **Readable.** Each demo has a short `README.md`: what it is, how to run it, what I learned. `scripts/new.sh` generates the skeleton.
+3. **Readable.** Each demo has a short `README.md`: what it is, how to run it, what I learned. `scripts/new.go` generates the skeleton.
 4. **Committed by directory.** One commit per demo, message prefix `<lang>/<name>: ...`.
 
 ## When to split a demo into its own repo

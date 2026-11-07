@@ -12,19 +12,36 @@ Small, self-contained demos. One idea per directory — each directory builds an
 
 ```
 .
-├── _template/README.md   # copy this for a new demo
+├── new.sh                # scaffold a demo: ./new.sh <lang> <name>
 ├── go/<name>/            # go.mod lives here
 ├── rust/<name>/          # Cargo.toml lives here
 ├── c/<name>/             # Makefile lives here
-├── python/<name>/        # pyproject.toml or a single file
+├── python/<name>/        # main.py
 └── web/<name>/           # index.html, servable from GitHub Pages
 ```
+
+## Add a demo
+
+```bash
+./new.sh go wordfreq
+```
+
+That creates `go/wordfreq/` with a manifest, a hello-world stub, and a README,
+and inserts a row at the top of the index above. Then:
+
+1. replace the stub with the actual demo, and fill in `go/wordfreq/README.md`
+   and the index row;
+2. `git add go/wordfreq README.md && git commit -m 'go/wordfreq: <what it does>'`.
+
+Languages: `go`, `rust`, `c`, `python`, `web`. The script refuses to overwrite
+existing directories and drops that language directory's `.gitkeep` on the first
+demo.
 
 Rules:
 
 1. **Self-contained.** Every demo directory owns its manifest (`go.mod`, `Cargo.toml`, `Makefile`, `package.json`). No shared code between demos, no root-level module.
 2. **Independent.** Adding, rewriting, or deleting a demo never touches another one.
-3. **Readable.** Each demo has a short `README.md`: what it is, how to run it, what I learned. Copy [`_template`](_template).
+3. **Readable.** Each demo has a short `README.md`: what it is, how to run it, what I learned. `new.sh` generates the skeleton.
 4. **Committed by directory.** One commit per demo, message prefix `<lang>/<name>: ...`.
 
 ## When to split a demo into its own repo

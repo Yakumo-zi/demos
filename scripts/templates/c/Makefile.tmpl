@@ -1,8 +1,0 @@
-CC ?= cc
-CFLAGS ?= -std=c11 -Wall -Wextra -O2
-
-{{.Name}}: main.c
-{{"\t"}}$(CC) $(CFLAGS) -o {{.Name}} main.c
-
-clean:
-{{"\t"}}rm -f {{.Name}}
